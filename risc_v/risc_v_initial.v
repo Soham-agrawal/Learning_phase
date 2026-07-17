@@ -42,9 +42,13 @@
    
    $reset = *reset;
    
-   
+   //PC
    $next_pc[31:0] = $reset ? 32'd0 : $pc[31:0] + 32'd4;
    $pc[31:0] = >>1$next_pc;
+   
+   //IMEM
+   `READONLY_MEM($pc, $$instr[31:0]);
+   
    // ...
    
    
