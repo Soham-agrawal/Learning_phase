@@ -1,6 +1,6 @@
 This folder contains all the projects made while learning about risc-v
 
-7-16-2026 12:30 calculator with ff - created a calculator with one of the input as the previous value of the output using flip flop 
+7-16-2026 12:30 calculator_with_ff - created a calculator with one of the input as the previous value of the output using flip flop 
                                      to simulate a real calculator where the new calculation is done on the previous output. Rum this
                                      code in makerchip.
 
