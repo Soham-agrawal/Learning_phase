@@ -10,3 +10,5 @@ risc_v_initial     7-17-2026 12:48 - started working on the risc v. Started with
                    
                    7-18-2026 11:50 - Added decoder, which gives the insructor type of the insrt.
 
+                             13:41 - Added more logic to the decoder to divide the instruction based on the type of instruction.
+
