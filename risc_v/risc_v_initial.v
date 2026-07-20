@@ -71,7 +71,7 @@
    $funct7[6:0] = $instr[6:0];
    $funct7_valid = $is_r_instr;
    $rd[4:0] = $instr[11:7];
-   $rd_valid = $is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr;
+   $rd_valid = ($is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr) && ($rd !== 4'b0);
    $rs1[4:0] = $instr[19:15];
    $rs1_valid = $is_r_instr || $is_i_instr || $is_s_instr || $is_b_instr;
    $rs2[4:0] = $instr[24:20];
