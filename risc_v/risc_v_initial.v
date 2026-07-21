@@ -43,7 +43,8 @@
    $reset = *reset;
    
    //PC
-   $next_pc[31:0] = $reset ? 32'd0 : $pc[31:0] + 32'd4;
+   $next_pc[31:0] = $reset ? 32'd0 : 
+                    $taken_br ? $br_tgt_pc[31:0] : $pc[31:0] + 32'd4;
    $pc[31:0] = >>1$next_pc;
    
    //IMEM
@@ -104,12 +105,23 @@
              $is_add  ? $src1_value + $src2_value :
              32'b0;
    
+   //TAKEN_BRC
+   $taken_br = 
+             $is_beq ? $src1_value == $src2_value :
+             $is_bne ? $src1_value != $src2_value :
+             $is_blt ? ($src1_value < $src2_value) ^ ($src1_value[31] != $src2_value[31]) :
+             $is_bge ? ($src1_value >= $src2_value) ^ ($src1_value[31] != $src2_value[31]):
+             $is_bltu ? $src1_value < $src2_value:
+             $is_bgeu ? $src1_value >= $src2_value:
+             1'b0;
+   $br_tgt_pc[31:0] = $imm + $pc;
+   
    // ...
    `BOGUS_USE($rd $rd_valid $rs1 $rs1_valid $rs2 $rs2_valid $opcode $imm_valid $funct3 $funct3_valid $funct7 $funct7_valid
     $is_beq $is_bne $is_blt $is_bge $is_bltu $is_bgeu $is_addi $is_add $is_r4_instr) 
    
    // Assert these to end simulation (before Makerchip cycle limit).
-   *passed = 1'b0;
+   m4+tb()
    *failed = *cyc_cnt > M4_MAX_CYC;
    
    m4+rf(32, 32, $reset, $rd_valid, $rd, $result, $rs1_valid, $rs1, $src1_value, $rs2_valid, $rs2, $src2_value)
