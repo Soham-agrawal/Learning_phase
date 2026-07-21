@@ -14,3 +14,5 @@ risc_v_initial     7-17-2026 12:48 - started working on the risc v. Started with
 
                    7-20-2026 13:02 - Completed Decoder, added RF and ALU. Now the code is able to do basic calculations and read and write to the RF.
 
+                   7-21-2026 12:10 - completed branch codes also, and have finished the initial risc V project, which can perform few basic instructions like add and branch.
+
