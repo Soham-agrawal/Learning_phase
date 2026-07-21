@@ -1,10 +1,12 @@
 This folder contains all the projects made while learning about risc-v (Run this code in makerchip)
 
 
-calculator_with_ff 7-16-2026 12:30 - created a calculator with one of the input as the previous value of the output using flip flop to simulate a real calculator where the new calculation is done on the previous output.
+calculator_with_ff -
+                   7-16-2026 12:30 - created a calculator with one of the input as the previous value of the output using flip flop to simulate a real calculator where the new calculation is done on the previous output.
 
 
-risc_v_initial     7-17-2026 12:48 - started working on the risc v. Started with the program counter, added the logic that will make it increment with each clock cycle to go to the next instruction starting from 0.
+risc_v_initial -  
+                   7-17-2026 12:48 - started working on the risc v. Started with the program counter, added the logic that will make it increment with each clock cycle to go to the next instruction starting from 0.
                              
                              13:00 - Added the IMEM part which holds the instruction set. It has been connected to the PC.
                    
@@ -16,3 +18,6 @@ risc_v_initial     7-17-2026 12:48 - started working on the risc v. Started with
 
                    7-21-2026 12:10 - completed branch codes also, and have finished the initial risc V project, which can perform few basic instructions like add and branch.
 
+
+risc_v_full_instructions -
+                   7-21-2026 14:00 - This file is a continuation of the previous one, but now with full codes. More logic has to be added to accomodate the new instructions.
