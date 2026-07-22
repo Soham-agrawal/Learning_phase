@@ -18,7 +18,9 @@
    
    //PC
    $next_pc[31:0] = $reset ? 32'd0 : 
-                    $taken_br ? $br_tgt_pc[31:0] : $pc[31:0] + 32'd4;
+                    $taken_br ? $br_tgt_pc[31:0] : 
+                    $is_jalr ? $jalr_tgt_pc[31:0] :
+                    $pc[31:0] + 32'd4;
    $pc[31:0] = >>1$next_pc;
    
    //IMEM
@@ -156,8 +158,10 @@
              $is_bge ? ($src1_value >= $src2_value) ^ ($src1_value[31] != $src2_value[31]):
              $is_bltu ? $src1_value < $src2_value:
              $is_bgeu ? $src1_value >= $src2_value:
+             $is_jal ? 1'b1 :
              1'b0;
    $br_tgt_pc[31:0] = $imm + $pc;
+   $jalr_tgt_pc[31:0] = $src1_value + $imm;
    
    // ...
    `BOGUS_USE($rd $rd_valid $rs1 $rs1_valid $rs2 $rs2_valid $opcode $imm_valid $funct3 $funct3_valid $funct7 $funct7_valid
