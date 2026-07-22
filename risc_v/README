@@ -21,3 +21,5 @@ risc_v_initial -
 
 risc_v_full_instructions -
                    7-21-2026 14:00 - This file is a continuation of the previous one, but now with full codes. More logic has to be added to accomodate the new instructions.
+
+                   7-22-2026 13:57 - The logic for all the instructions which involved calculations were added to the ALU.
