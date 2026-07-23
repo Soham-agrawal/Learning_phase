@@ -84,7 +84,7 @@
    //$is_lw   = $dec_bits ==? 11'bx_010_0000011;
    //$is_lbu  = $dec_bits ==? 11'bx_100_0000011;
    //$is_lhu  = $dec_bits ==? 11'bx_101_0000011;
-   
+   $is_load = $dec_bits ==? 11'bx_xxx_0000011;
    //$is_sb   = $dec_bits ==? 11'bx_000_0100011;
    //$is_sh   = $dec_bits ==? 11'bx_001_0100011;
    //$is_sw   = $dec_bits ==? 11'bx_010_0100011;
@@ -148,6 +148,8 @@
                           {31'b0, $src1_value[31]} ) :
              $is_sra ? $sra_rslt[31:0] :
              $is_srai ? $srai_rslt[31:0] :
+             $is_s_instr ? $src1_value + $imm :
+             $is_load ? $src1_value + $imm :
              32'b0;
    
    //TAKEN_BRC
@@ -171,8 +173,9 @@
    m4+tb()
    *failed = *cyc_cnt > M4_MAX_CYC;
    
-   m4+rf(32, 32, $reset, $rd_valid, $rd, $result, $rs1_valid, $rs1, $src1_value, $rs2_valid, $rs2, $src2_value)
+   m4+rf(32, 32, $reset, $rd_valid, $rd, $is_load ? $ld_data : $result, $rs1_valid, $rs1, $src1_value, $rs2_valid, $rs2, $src2_value)
    //m4+dmem(32, 32, $reset, $addr[4:0], $wr_en, $wr_data[31:0], $rd_en, $rd_data)
+   m4+dmem(32, 32, $reset, $result[6:2], $is_s_instr, $src2_value[31:0], $is_load, $ld_data)
    m4+cpu_viz()
 \SV
    endmodule
