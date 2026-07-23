@@ -25,3 +25,5 @@ risc_v_full_instructions -
                    7-22-2026 13:57 - The logic for all the instructions which involved calculations were added to the ALU.
 
                              14:36 -  Added logic for the jump instructions JAL and JALR
+
+                   7-23-2025 17:44 - Added Memory for load and store instructions.
