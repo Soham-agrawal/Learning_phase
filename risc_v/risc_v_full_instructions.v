@@ -45,7 +45,7 @@
    //FIELDS
    $funct3[2:0] = $instr[14:12];
    $funct3_valid = $is_r_instr || $is_i_instr || $is_s_instr || $is_b_instr;
-   $funct7[6:0] = $instr[6:0];
+   $funct7[6:0] = $instr[31:25];
    $funct7_valid = $is_r_instr;
    $rd[4:0] = $instr[11:7];
    $rd_valid = ($is_r_instr || $is_i_instr || $is_u_instr || $is_j_instr) && ($rd !== 4'b0);
