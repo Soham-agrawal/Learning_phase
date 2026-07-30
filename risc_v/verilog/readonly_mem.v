@@ -1,22 +1,26 @@
-module readonly_mem (
-    input reg width = 32,
-    input reg depth = 256,
-    input wire [31:0] addr,
-    output reg [31:0] data_out
+module readonly_mem #(
+    parameter WIDTH = 32,  // Default bit-width of each memory word
+    parameter DEPTH = 256  // Default number of memory words
+)(
+    input wire [31:0] addr,     // 32-bit address input
+    output reg [WIDTH-1:0] data_out // Output matches the configured width
 );
 
-    // Define a simple read-only memory with 256 words (32-bit each)
-    reg [width-1:0] memory [0:depth-1];
+    // Define the memory array using the compile-time parameters
+    reg [WIDTH-1:0] memory [0:DEPTH-1];
 
     initial begin
-        // Initialize the memory with some values (for example, instructions)
+        // Initialize memory locations 
         memory[0] = 32'h00000000; // NOP
         memory[1] = 32'h00000001; // Some instruction
         memory[2] = 32'h00000002; // Some instruction
-        // ... Initialize other memory locations as needed
+        // Remaining uninitialized locations default to zero or X depending on the simulator
     end
 
+    // Pure combinational read logic
     always @(*) begin
-        data_out = memory[addr[7:0]]; // Read from the memory using the lower 8 bits of the address
+        // Using $clog2 safely scales the address bits to match the DEPTH parameter
+        data_out = memory[addr[$clog2(DEPTH)-1:0]]; 
     end 
-    endmodule
+
+endmodule

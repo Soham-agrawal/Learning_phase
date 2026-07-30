@@ -5,7 +5,7 @@ module decoder (
     output reg [4:0] rd,
     output reg [6:0] opcode,
     output reg [2:0] funct3,
-    output reg [6:0] funct7
+    output reg [6:0] funct7,
     output reg [31:0] imm,
     output reg funct3_valid,
     output reg funct7_valid,
@@ -16,23 +16,24 @@ module decoder (
 );
     wire is_r_instr, is_i_instr, is_s_instr, is_b_instr, is_u_instr, is_j_instr, is_r4_instr;
 
-    always @(*) begin
+    
     // Extract instruction type based on opcode
-    is_u_instr  = instr[6:2] ==? 5'b0x101;
-    is_r_instr  = instr[6:2] ==  5'b01011 ||
-                  instr[6:2] ==  5'b01100 ||
-                  instr[6:2] ==  5'b01110 ||
-                  instr[6:2] ==  5'b10100;
-    is_s_instr  = instr[6:2] ==? 5'b0100x;
-    is_i_instr  = instr[6:2] ==  5'b00000 ||
-                  instr[6:2] ==  5'b00001 ||
-                  instr[6:2] ==  5'b00100 ||
-                  instr[6:2] ==  5'b00110 ||
-                  instr[6:2] ==  5'b11001;
-    is_b_instr  = instr[6:2] ==  5'b11000;
-    is_j_instr  = instr[6:2] ==  5'b11011;
-    is_r4_instr = instr[6:2] ==? 5'b100xx;
-   
+    assign is_u_instr  = instr[6:2] ==? 5'b0x101;
+    assign is_r_instr  = instr[6:2] ==  5'b01011 ||
+                          instr[6:2] ==  5'b01100 ||
+                          instr[6:2] ==  5'b01110 ||
+                          instr[6:2] ==  5'b10100;
+    assign is_s_instr  = instr[6:2] ==? 5'b0100x;
+    assign is_i_instr  = instr[6:2] ==  5'b00000 ||
+                          instr[6:2] ==  5'b00001 ||
+                          instr[6:2] ==  5'b00100 ||
+                          instr[6:2] ==  5'b00110 ||
+                          instr[6:2] ==  5'b11001;
+    assign is_b_instr  = instr[6:2] ==  5'b11000;
+    assign is_j_instr  = instr[6:2] ==  5'b11011;
+    assign is_r4_instr = instr[6:2] ==? 5'b100xx;
+
+    always @(*) begin
     //funct3
     funct3[2:0] = instr[14:12];
     funct3_valid = is_r_instr || is_i_instr || is_s_instr || is_b_instr;

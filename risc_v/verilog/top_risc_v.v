@@ -1,6 +1,6 @@
 module top_risc_v (
     input wire clk,
-    input wire reset,
+    input wire reset
 );
 
     wire [31:0] next_pc;
@@ -18,6 +18,7 @@ module top_risc_v (
     wire taken_br;
     wire is_load, is_s_instr;  
     wire [31:0] ld_data;
+    wire [31:0] br_tgt_pc, jalr_tgt_pc;
     
 
     // Instantiate the program counter
@@ -30,14 +31,14 @@ module top_risc_v (
 
     // Logic to determine the next program counter value
     // For simplicity, let's just increment the PC by 4 for each clock cycle
+    assign br_tgt_pc[31:0] = imm + pc;
+    assign jalr_tgt_pc[31:0] = src1_value + imm;
     assign next_pc = reset    ? 32'd0             : 
                      taken_br ? br_tgt_pc[31:0]   : 
                      is_jalr  ? jalr_tgt_pc[31:0] :
                      pc + 32'd4;
 
-    readonly_mem rom_inst (
-        .width(32),
-        .depth(32),
+    readonly_mem #(.WIDTH(32), .DEPTH(256)) rom_inst (
         .addr(pc),
         .data_out(instr) 
     );
@@ -59,7 +60,7 @@ module top_risc_v (
         .imm_valid(imm_valid)
     ); 
     
-    register_file reg_file_inst (
+    register_file #(.WIDTH(32), .DEPTH(32)) reg_file_inst (
         .reset(reset),
         .wr_en(rd_valid), 
         .wr_index(rd),
@@ -72,8 +73,7 @@ module top_risc_v (
         .rd_data2(src2_value)  
     );
 
-    wire [10:0] dec_bits;
-    assign dec_bits[10:0] = {instr[30], funct3, opcode};
+    assign dec_bits = {instr[30], funct3, opcode};
     alu alu_inst (
         .dec_bits(dec_bits),
         .src1_value(src1_value),
@@ -104,12 +104,9 @@ module top_risc_v (
             is_bgeu ? src1_value >= src2_value:
             is_jal ? 1'b1 :
             1'b0;
-    assign br_tgt_pc[31:0] = imm + pc;
-    assign jalr_tgt_pc[31:0] = src1_value + imm;
 
-    data_memory data_mem_inst (
-        .width(32),
-        .depth(32),
+
+    data_memory #(.WIDTH(32), .DEPTH(32)) data_mem_inst (
         .reset(reset),
         .wr_en(is_s_instr), 
         .addr(result[6:2]), // Use the result from ALU as the address for store
