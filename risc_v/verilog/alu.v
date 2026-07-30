@@ -1,6 +1,6 @@
 module alu (
     input wire [10:0] dec_bits,
-    input wire [31:0] pc,            // FIX 1: Added missing pc port
+    input wire [31:0] pc,            
     input wire [31:0] src1_value, 
     input wire [31:0] src2_value,
     input wire [31:0] imm, 
@@ -59,8 +59,8 @@ module alu (
              is_ori    ? src1_value | imm :
              is_xori   ? src1_value ^ imm :
              is_addi   ? src1_value + imm :
-             is_slli   ? src1_value << imm[4:0] : // FIX 2: Corrected to [4:0]
-             is_srli   ? src1_value >> imm[4:0] : // FIX 2: Corrected to [4:0]
+             is_slli   ? src1_value << imm[4:0] : 
+             is_srli   ? src1_value >> imm[4:0] : 
              
              is_and    ? src1_value & src2_value :
              is_or     ? src1_value | src2_value :
