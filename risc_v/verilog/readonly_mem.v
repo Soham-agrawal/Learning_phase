@@ -1,10 +1,12 @@
 module readonly_mem (
+    input reg width = 32,
+    input reg depth = 256,
     input wire [31:0] addr,
     output reg [31:0] data_out
 );
 
     // Define a simple read-only memory with 256 words (32-bit each)
-    reg [31:0] memory [0:255];
+    reg [width-1:0] memory [0:depth-1];
 
     initial begin
         // Initialize the memory with some values (for example, instructions)
