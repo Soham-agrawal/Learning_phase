@@ -4,7 +4,7 @@ module alu (
     input wire [31:0] src1_value, 
     input wire [31:0] src2_value,
     input wire [31:0] imm, 
-    output wire [31:0] result
+    output reg [31:0] result
 );
 
     wire is_lui, is_auipc, is_jal, is_jalr;
@@ -54,7 +54,8 @@ module alu (
     assign srai_rslt  = sext_src1 >> imm[4:0];
    
     // Muxing result output
-    assign result = 
+    always @(*) begin
+       result = 
              is_andi   ? src1_value & imm :
              is_ori    ? src1_value | imm :
              is_xori   ? src1_value ^ imm :
@@ -82,4 +83,5 @@ module alu (
              is_s_instr? src1_value + imm :
              is_load   ? src1_value + imm :
              32'b0;
+    end
 endmodule
