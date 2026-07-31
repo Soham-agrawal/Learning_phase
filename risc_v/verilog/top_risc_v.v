@@ -39,6 +39,7 @@ module top_risc_v (
                      pc + 32'd4;
 
     readonly_mem #(.WIDTH(32), .DEPTH(256)) rom_inst (
+        .clk(clk),
         .addr(pc),
         .data_out(instr) 
     );

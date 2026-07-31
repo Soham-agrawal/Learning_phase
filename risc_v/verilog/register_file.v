@@ -20,7 +20,7 @@ always @(*) begin
     if (reset) begin
         // Reset all registers to 0
         for (i = 0; i < DEPTH; i++) begin
-            registers[i] <= {WIDTH{1'b0}};
+            registers[i] <= i;//{WIDTH{1'b0}};
         end
     end else if (wr_en && wr_index != 5'b0) begin
         // Write data to the specified register if write enable is high and index is not zero
