@@ -4,7 +4,8 @@ module readonly_mem #(
 )(
     input wire clk,          // Clock signal for synchronous operations
     input wire [31:0] addr,     // 32-bit address input
-    output reg [WIDTH-1:0] data_out // Output matches the configured width
+    output reg [WIDTH-1:0] data_out, // Output matches the configured width
+    output reg [(40*8)-1:0] instr_name // Output matches the configured width
 );
 
     // Define the memory array using the compile-time parameters
@@ -73,8 +74,8 @@ module readonly_mem #(
         memory[57] = {1'b0, 10'b0, 1'b0, 8'b0, 5'd0, 7'b1101111}; // JAL x0,0 (infinite loop, done)
         // Remaining uninitialized locations default to zero or X depending on the simulator
     end
-    `ifdef SIMULATION
-        reg [40*8-1:0] instr_strs [0:57];
+    //`ifdef SIMULATION
+        reg [(40*8)-1:0] instr_strs [0:57];
         initial begin
             instr_strs[0]  = "ADDI x1,x0,21";
             instr_strs[1]  = "ADDI x2,x0,7";
@@ -135,13 +136,14 @@ module readonly_mem #(
             instr_strs[56] = "ADDI x30,x0,1";
             instr_strs[57] = "JAL x0,0 (done)";
         end
-    `endif
+    //`endif
     // Pure combinational read logic
-    always @(*) begin
-        // Using $clog2 safely scales the address bits to match the DEPTH parameter
-        data_out = memory[addr>>2]; 
-    end 
-    always @(posedge clk) begin
+    //always @(posedge clk) begin
+    // Using $clog2 safely scales the address bits to match the DEPTH parameter
+    assign data_out = memory[addr>>2]; 
+    assign instr_name = instr_strs[addr>>2]; // Fetch the instruction string based on the address
+    //end 
+    always @(addr) begin
         `ifdef SIMULATION
             $display("PC=%0d  instr=%h  (%s)", addr>>2, data_out, instr_strs[addr>>2]);
         `endif

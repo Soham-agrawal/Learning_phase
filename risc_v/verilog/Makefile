@@ -1,7 +1,7 @@
 # ==========================================
 # 1. VARIABLES (Settings Configuration)
 # ==========================================
-Compiler  = iverilog
+Compiler  = iverilog -g2012
 Simulator = vvp
 Waveform  = gtkwave
 
@@ -14,7 +14,8 @@ Srcs      = top_risc_v.v \
             data_memory.v \
             readonly_mem.v \
             program_counter.v \
-            register_file.v 
+            register_file.v \
+            top_risc_v_tb.v 
 
 # ==========================================
 # 2. RULES & TARGETS (Workflow Steps)
@@ -33,7 +34,7 @@ sim: compile
 
 # STEP 3: Open GTKWave to view waveforms
 wave: sim
-	$(Waveform) $(Target)
+	$(Waveform) -o $(Target)
 
 # Clean utility to reset the directory (Windows Native)
 clean:

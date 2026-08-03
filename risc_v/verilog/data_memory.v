@@ -2,6 +2,7 @@ module data_memory #(
     parameter WIDTH = 32,  // Default bit-width of each memory word
     parameter DEPTH = 256  // Default number of memory words
 )(
+    input wire clk,
     input wire reset,
     input wire wr_en,
     input wire [4:0] addr,
@@ -12,7 +13,7 @@ module data_memory #(
 
 reg [WIDTH-1:0] registers [0:DEPTH-1]; // DEPTH registers of WIDTH bits each
 integer i;
-always @(*) begin
+always @(posedge clk or posedge reset) begin
     if (reset) begin
         // Reset all registers to 0
         for (i = 0; i < DEPTH; i++) begin

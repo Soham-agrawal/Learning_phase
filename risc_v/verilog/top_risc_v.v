@@ -33,15 +33,16 @@ module top_risc_v (
     // For simplicity, let's just increment the PC by 4 for each clock cycle
     assign br_tgt_pc[31:0] = imm + pc;
     assign jalr_tgt_pc[31:0] = src1_value + imm;
-    assign next_pc = reset    ? 32'd0             : 
-                     taken_br ? br_tgt_pc[31:0]   : 
+    assign next_pc = taken_br ? br_tgt_pc[31:0]   : 
                      is_jalr  ? jalr_tgt_pc[31:0] :
                      pc + 32'd4;
 
+    wire [40*8-1:0] instr_name; // Array to hold instruction strings for simulation
     readonly_mem #(.WIDTH(32), .DEPTH(256)) rom_inst (
         .clk(clk),
         .addr(pc),
-        .data_out(instr) 
+        .data_out(instr),
+        .instr_name(instr_name)
     );
 
     decoder decoder_inst (
@@ -62,6 +63,7 @@ module top_risc_v (
     ); 
     
     register_file #(.WIDTH(32), .DEPTH(32)) reg_file_inst (
+        .clk(clk),
         .reset(reset),
         .wr_en(rd_valid), 
         .wr_index(rd),
@@ -108,6 +110,7 @@ module top_risc_v (
 
 
     data_memory #(.WIDTH(32), .DEPTH(32)) data_mem_inst (
+        .clk(clk),
         .reset(reset),
         .wr_en(is_s_instr), 
         .addr(result[6:2]), // Use the result from ALU as the address for store
