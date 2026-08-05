@@ -25,7 +25,7 @@ always @(posedge clk or posedge reset) begin
         registers[addr] <= wr_data;
         end
         // Read data from the specified registers if read enable is high
-        rd_data <= (rd_en) ? registers[addr] : {WIDTH{1'b0}};
     end
 end
+assign rd_data = (rd_en) ? registers[addr] : {WIDTH{1'b0}};
 endmodule

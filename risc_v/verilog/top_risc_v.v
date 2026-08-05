@@ -67,7 +67,7 @@ module top_risc_v (
         .reset(reset),
         .wr_en(rd_valid), 
         .wr_index(rd),
-        .wr_data(is_s_instr ? ld_data : result), // Write result to rd or src2_value for store instructions
+        .wr_data(is_load ? ld_data : result), // Write result to rd or src2_value for store instructions
         .rd_index1(rs1),
         .rd_en1(rs1_valid),
         .rd_index2(rs2),
@@ -79,6 +79,7 @@ module top_risc_v (
     assign dec_bits = {instr[30], funct3, opcode};
     alu alu_inst (
         .dec_bits(dec_bits),
+        .pc(pc),
         .src1_value(src1_value),
         .src2_value(src2_value),
         .imm(imm),
