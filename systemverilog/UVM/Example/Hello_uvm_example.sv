@@ -1,3 +1,5 @@
+// Code your testbench here
+// or browse Examples
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
@@ -14,7 +16,7 @@ class my_env extends uvm_env;
   endfunction : build_phase
   
   task run_phase (uvm_phase phase);
-    `uvm_info (get_name(), $sformatf ("Hello UVM! simulation started"), UVM_LOW)
+    `uvm_info (get_name(), $sformatf ("This is my first uvm test"), UVM_LOW)
   endtask : run_phase
 endclass : my_env
 
@@ -31,7 +33,7 @@ class base_test extends uvm_test;
   
   virtual function void build_phase(uvm_phase phase);
     super.build_phase (phase);
-    m_top_env = my_env::type_id::create ("m_top_env", this);
+    m_top_env = my_env::type_id::create ("tryign_some_new_name", this);
   endfunction : build_phase
   
   virtual function void end_of_elaboration_phase(uvm_phase phase);
@@ -52,6 +54,9 @@ module tb_top;
   end
 endmodule
 
+
+
+
 /*
 ----------------------------------------------------------------
 CDNS-UVM-1.2 (25.03-s001)
@@ -64,14 +69,14 @@ CDNS-UVM-1.2 (25.03-s001)
 
 UVM_INFO @ 0: reporter [RNTST] Running test base_test...
 UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
-------------------------------------
-Name          Type       Size  Value
-------------------------------------
-uvm_test_top  base_test  -     @1532
-  m_top_env   my_env     -     @1597
-------------------------------------
+----------------------------------------------
+Name                    Type       Size  Value
+----------------------------------------------
+uvm_test_top            base_test  -     @1532
+  tryign_some_new_name  my_env     -     @1597
+----------------------------------------------
 
-UVM_INFO testbench.sv(19) @ 0: uvm_test_top.m_top_env [m_top_env] Hello UVM! simulation started
+UVM_INFO testbench.sv(19) @ 0: uvm_test_top.tryign_some_new_name [tryign_some_new_name] This is my first uvm test
 UVM_INFO @ 0: reporter [UVM/REPORT/SERVER] 
 --- UVM Report Summary ---
 
@@ -84,7 +89,7 @@ UVM_FATAL :    0
 [RNTST]     1
 [UVM/RELNOTES]     1
 [UVMTOP]     1
-[m_top_env]     1
+[tryign_some_new_name]     1
 
 Simulation complete via $finish(1) at time 0 FS + 231
 */
