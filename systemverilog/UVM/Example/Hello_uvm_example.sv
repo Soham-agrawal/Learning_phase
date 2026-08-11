@@ -62,20 +62,8 @@ CDNS-UVM-1.2 (25.03-s001)
 (C) 2013-2014 NVIDIA Corporation
 ----------------------------------------------------------------
 
-  ***********       IMPORTANT RELEASE NOTES         ************
-
-  You are using a version of the UVM library that has been compiled
-  with `UVM_NO_DEPRECATED undefined.
-  See http://www.eda.org/svdb/view.php?id=3313 for more details.
-
-  You are using a version of the UVM library that has been compiled
-  with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
-  See http://www.eda.org/svdb/view.php?id=3770 for more details.
-
-      (Specify +UVM_NO_RELNOTES to turn off this notice)
-
 UVM_INFO @ 0: reporter [RNTST] Running test base_test...
-UVM_INFO /xcelium25.03/tools/methodology/UVM/CDNS-1.2/sv/src/base/uvm_root.svh(605) @ 0: reporter [UVMTOP] UVM testbench topology:
+UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
 ------------------------------------
 Name          Type       Size  Value
 ------------------------------------
@@ -84,7 +72,7 @@ uvm_test_top  base_test  -     @1532
 ------------------------------------
 
 UVM_INFO testbench.sv(19) @ 0: uvm_test_top.m_top_env [m_top_env] Hello UVM! simulation started
-UVM_INFO /xcelium25.03/tools/methodology/UVM/CDNS-1.2/sv/src/base/uvm_report_server.svh(851) @ 0: reporter [UVM/REPORT/SERVER] 
+UVM_INFO @ 0: reporter [UVM/REPORT/SERVER] 
 --- UVM Report Summary ---
 
 ** Report counts by severity
